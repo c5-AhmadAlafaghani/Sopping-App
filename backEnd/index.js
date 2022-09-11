@@ -4,6 +4,8 @@ const cors = require("cors");
 require("./models/db");
 
 //routers
+const basketRouter = require("./routes/basket");
+const favoriteRouter = require("./routes/favorite");
 const productsRouter = require("./routes/products");
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
@@ -15,6 +17,8 @@ app.use(express.json());
 app.use(cors());
 
 // router middleware
+app.use("/favorite", favoriteRouter);
+app.use("/basket", basketRouter);
 app.use("/products", productsRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);

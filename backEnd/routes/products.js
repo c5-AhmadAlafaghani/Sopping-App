@@ -1,4 +1,5 @@
 const express = require("express");
+const authentication = require("../middlewares/authentication");
 
 const {
   createNewProduct,
@@ -7,7 +8,6 @@ const {
   updateProductById,
   getProductById,
 } = require("../controllers/products");
-const authentication = require("../middlewares/authentication");
 
 const productsRouter = express.Router();
 
