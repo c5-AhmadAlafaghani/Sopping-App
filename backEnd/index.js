@@ -4,10 +4,9 @@ const cors = require("cors");
 require("./models/db");
 
 //routers
+const productsRouter = require("./routes/products");
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
-const roleRouter = require("./routes/roles");
-
 
 const app = express();
 
@@ -16,11 +15,11 @@ app.use(express.json());
 app.use(cors());
 
 // router middleware
+app.use("/products", productsRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
-app.use("/role", roleRouter);
 
-const PORT = process.env.PORT 
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`server on ${PORT}`);
