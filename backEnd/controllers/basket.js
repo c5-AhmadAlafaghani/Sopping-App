@@ -8,7 +8,7 @@ const addAndUpdateToCart = (req, res) => {
 
   const query = `SELECT * FROM basket WHERE product_id=? AND user_id=? AND is_deleted = 0 `;
   const data = [product_id, user_id];
-  console.log("data", data);
+  
   connection.query(query, data, (err, result) => {
     console.log(result);
     if (result.length) {

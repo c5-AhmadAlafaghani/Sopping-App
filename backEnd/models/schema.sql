@@ -2,6 +2,7 @@ DROP DATABASE Shopping;
 CREATE DATABASE Shopping;
 USE Shopping;
 
+
 CREATE TABLE users(
     id INT AUTO_INCREMENT NOT NULL,
     userName VARCHAR(255),
