@@ -26,7 +26,7 @@ export const Login = () => {
        console.log(result.data.token);
        const token = result.data.token
        localStorage.setItem('token',token );
-
+       setMessage("Login successfully")
       })
 
       .catch((err) => {
@@ -34,7 +34,7 @@ export const Login = () => {
       });
   };
 
-  //===============================================================
+ 
 
   return (
     <>
