@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 export function Home() {
+    const Navigate = useNavigate();
+
+
   const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
@@ -41,10 +45,10 @@ export function Home() {
       await axios.put(
         `http://localhost:5000/products/${id}`,
         {
-            productName,
-            description,
-            price,
-          },
+          productName,
+          description,
+          price,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,7 +88,7 @@ export function Home() {
       {products.map((element, index) => {
         return (
           <div key={element.id}>
-            <div className="product-big-dev">
+            <div className="product-big-dev" onClick={()=>{Navigate(`/product/${element.id}`)}}>
               <div className="Product-Img-Div">
                 <img className="img" src={element.img} />
               </div>
@@ -95,14 +99,7 @@ export function Home() {
                 <div>
                   {decoded === element.user_id ? (
                     <>
-                      {/* <button
-                        onClick={() => {
-                          updateProductById(element.id);
-                        }}
-                      >
-                        update
-                      </button> */}
-                      {updateBox  === element.id && (
+                      {updateBox === element.id && (
                         <form>
                           <br />
                           <input
@@ -128,11 +125,11 @@ export function Home() {
                         Delete
                       </button>
                       <button
-                    className="update"
-                    onClick={() => updateItem(element)}
-                  >
-                    Update
-                  </button>
+                        className="update"
+                        onClick={() => updateItem(element)}
+                      >
+                        Update
+                      </button>
                     </>
                   ) : (
                     <></>
