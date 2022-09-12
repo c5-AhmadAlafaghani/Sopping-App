@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 export function Home() {
   const [products, setProducts] = useState([]);
+  let decoded = 0;
+  const token = localStorage.getItem("token");
+  if (token) {
+    decoded = jwt_decode(token);
+    decoded = decoded.userId;
+  }
   const allProduct = () => {
     axios
       .get("http://localhost:5000/products")
@@ -31,6 +38,16 @@ export function Home() {
                 <div className="productName"> {element.productName}</div>
                 <div className="description"> {element.description}</div>
                 <div className="price">{element.price} JD</div>
+                <div>
+                  {decoded === element.user_id ? (
+                    <>
+                      <button >update</button>
+                      <button>Delete</button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
           </div>

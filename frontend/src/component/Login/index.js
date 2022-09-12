@@ -4,7 +4,7 @@ import React, {  useState } from "react";
 import axios from "axios";
 
 
-export const Login = () => {
+export const Login = ({setIslog}) => {
 
  
   // ===================================
@@ -26,7 +26,9 @@ export const Login = () => {
        console.log(result.data.token);
        const token = result.data.token
        localStorage.setItem('token',token );
-       setMessage("Login successfully")
+       setIslog(true)
+      
+       
       })
 
       .catch((err) => {

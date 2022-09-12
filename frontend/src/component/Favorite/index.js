@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+
 export function Favorite() {
+
   const [favorite, setFavorite] = useState([]);
+
+  
   // const addToFavorite = (id) => {
   //   axios
   //     .put(`http://localhost:5000/favorite/add/${id}`)
