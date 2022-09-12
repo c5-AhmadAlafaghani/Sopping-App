@@ -10,7 +10,9 @@ export function Home() {
         console.log(result.data.result);
         setProducts(result.data.result);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
   useEffect(() => {
     allProduct();
