@@ -86,7 +86,7 @@ const updateProductById = (req, res) => {
   const data = [id, user_id];
 
   connection.query(query, data, (err, result) => {
-    console.log("controller 92: ", result);
+    console.log("result",result);
     if (err) {
       return res.status(404).json({
         success: false,
@@ -94,14 +94,13 @@ const updateProductById = (req, res) => {
         err: err,
       });
     }
-    if (!result) {
+    if (result.length === 0) {
       return res.status(404).json({
         success: false,
         massage: `The product: ${id} is not found`,
         err: err,
       });
     } else {
-      console.log("result:107", result);
       const query = `UPDATE products SET productName=?,img=?,description=?,price=? WHERE id=?;`;
       const data = [
         productName || result[0].productName,
@@ -112,8 +111,8 @@ const updateProductById = (req, res) => {
       ];
 
       connection.query(query, data, (err, result) => {
-        console.log("controller 117", err);
         if (result.affectedRows != 0)
+        console.log("true");
           res.status(201).json({
             success: true,
             massage: `product updated`,

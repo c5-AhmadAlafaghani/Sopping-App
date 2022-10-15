@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export function Favorite() {
 
   const [favorite, setFavorite] = useState([]);
+  const token = localStorage.getItem("token");
 
-  
-  // const addToFavorite = (id) => {
-  //   axios
-  //     .put(`http://localhost:5000/favorite/add/${id}`)
-  //     .then((result) => {
-  //       console.log(result.data);
-  //       setFavorite(result.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // };
+  let { id } = useParams();
+
+
 
   const viewFavoriteList = () => {
     const token = localStorage.getItem("token");
@@ -35,6 +28,20 @@ export function Favorite() {
         console.log(err.message);
       });
   };
+  const removeFromFavorite =(id)=>{
+axios.put(`http://localhost:5000/favorite/${id}`,{},
+{
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+}).then((result) => {
+  console.log(result.data);
+  viewFavoriteList()
+})
+.catch((err) => {
+  console.log(err.message);
+});
+  }
   useEffect(() => {
     viewFavoriteList();
   }, []);
@@ -52,6 +59,9 @@ export function Favorite() {
                 <div className="productName"> {element.productName}</div>
                 <div className="description"> {element.description}</div>
                 <div className="price">{element.price} JD</div>
+                <button onClick={()=>{
+                  removeFromFavorite(element.id)
+                }}>Remove from favorite</button>
               </div>
             </div>
           </div>

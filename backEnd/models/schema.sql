@@ -16,10 +16,10 @@ CREATE TABLE users(
 
 CREATE TABLE products(
 id INT AUTO_INCREMENT NOT NULL,
-productName VARCHAR(255),
-img VARCHAR(255),
-description VARCHAR(255),
-price INT,
+productName VARCHAR(255) NOT NULL,
+img VARCHAR(255) NOT NULL,
+description VARCHAR(255) NOT NULL,
+price INT NOT NULL,
 user_id INT,
 foreign key (user_id) references users(id),
 is_deleted TINYINT DEFAULT 0,

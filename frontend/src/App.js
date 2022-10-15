@@ -8,6 +8,7 @@ import { Favorite } from "./component/Favorite";
 import { Basket } from "./component/Basket";
 import { Dashboard } from "./component/Dashboard";
 import { Product } from "./component/Product";
+import { Update } from "./component/Update";
 import { Route, Routes } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,6 +26,7 @@ useEffect(() => {
       <Navbar setIslog={setIslog} isLog={isLog} />
       <Routes>
         <Route path={"/product/:id"} element={<Product />} />
+        <Route path={"/update/:id"} element={<Update />} />
         <Route path={"/home"} element={<Home />} />
         <Route path={"/favorite"} element={<Favorite />} />
         <Route path={"/basket"} element={<Basket />} />

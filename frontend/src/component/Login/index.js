@@ -1,38 +1,38 @@
 import React, {  useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 
 
 export const Login = ({setIslog}) => {
 
+  let navigate = useNavigate();
  
   // ===================================
  
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
-  //===================================
+  // ===================================
 
   const loginn = () => {
-    console.log(email,
-        password,);
     axios
       .post("http://localhost:5000/login", {
         email,
         password,
       })
       .then((result) => {
-       console.log(result.data.token);
        const token = result.data.token
        localStorage.setItem('token',token );
        setIslog(true)
+       navigate(`/home`)
       
        
       })
 
       .catch((err) => {
-        setMessage("Error happened while Login, please try again");
+        setMessage("Error, pleas check your email or password and try to login again");
       });
   };
 
@@ -67,6 +67,7 @@ export const Login = ({setIslog}) => {
             Login
           </button>
           <p>{message}</p>
+          <p>If you are not registered please sign up <Link to={`/register`}>here</Link>. </p>
         </div>
       </div>
     </>

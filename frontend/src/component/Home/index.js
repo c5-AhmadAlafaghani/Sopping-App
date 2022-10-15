@@ -4,14 +4,9 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 export function Home() {
-    const Navigate = useNavigate();
-
+  const Navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
-  const [productName, setProductName] = useState("");
-  const [description, setDescription] = useState("");
-  const [updateBox, setUpdateBox] = useState(false);
-  const [price, setPrice] = useState("");
 
   let decoded = 0;
   const token = localStorage.getItem("token");
@@ -20,46 +15,17 @@ export function Home() {
     decoded = decoded.userId;
   }
 
-  const updateProductById = (element) => {
-    setUpdateBox(!updateBox);
-    // setItemId(element.id);
-    setProductName(element.productName);
-    setPrice(element.price);
-    setDescription(element.description);
-    if (updateBox) updateItem(element.id);
-  };
-
   const allProduct = () => {
     axios
       .get("http://localhost:5000/products")
       .then((result) => {
-        console.log(result.data.result);
         setProducts(result.data.result);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
-  const updateItem = async (id) => {
-    try {
-      await axios.put(
-        `http://localhost:5000/products/${id}`,
-        {
-          productName,
-          description,
-          price,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      allProduct();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const deleteProductById = (product_id) => {
     axios
       .put(
@@ -79,44 +45,62 @@ export function Home() {
         console.log(err.message);
       });
   };
+  const addToVavorite = (id)=>{
+    console.log(id);
+    axios.put(`http://localhost:5000/favorite/Add/${id}`,{},{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((result) => {
+      console.log(result.data);
+      
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  }
   useEffect(() => {
     allProduct();
   }, []);
 
   return (
     <div>
-      {products.map((element, index) => {
+      {products.map((element) => {
         return (
           <div key={element.id}>
-            <div className="product-big-dev" onClick={()=>{Navigate(`/product/${element.id}`)}}>
+            <div className="product-big-dev">
               <div className="Product-Img-Div">
-                <img className="img" src={element.img} />
+                <img
+                  className="img"
+                  src={element.img}
+                  onClick={() => {
+                    Navigate(`/product/${element.id}`);
+                  }}
+                />
               </div>
-              <div className="productName-description">
-                <div className="productName"> {element.productName}</div>
-                <div className="description"> {element.description}</div>
-                <div className="price">{element.price} JD</div>
+              <div className="productName-description" onClick={() => {}}>
+                <div className="productName" onClick={() => {}}>
+                  {" "}
+                  {element.productName}
+                </div>
+                <div className="description" onClick={() => {}}>
+                  {" "}
+                  {element.description}
+                </div>
+                <div className="price" onClick={() => {}}>
+                  {element.price} JD
+                </div>
                 <div>
+                  <button
+                    className="addToFavorite"
+                    onClick={() => {
+                      addToVavorite(element.id);
+                    }}
+                  >
+                    Add to favorite
+                  </button>
                   {decoded === element.user_id ? (
                     <>
-                      {updateBox === element.id && (
-                        <form>
-                          <br />
-                          <input
-                            type="text"
-                            defaultValue={element.title}
-                            placeholder="item title here"
-                            onChange={(e) => setProductName(e.target.value)}
-                          />
-                          <br />
-
-                          <input
-                            placeholder="item price here"
-                            defaultValue={element.price}
-                            onChange={(e) => setPrice(e.target.value)}
-                          />
-                        </form>
-                      )}{" "}
                       <button
                         onClick={() => {
                           deleteProductById(element.id);
@@ -126,7 +110,9 @@ export function Home() {
                       </button>
                       <button
                         className="update"
-                        onClick={() => updateItem(element)}
+                        onClick={() => {
+                          Navigate(`/update/${element.id}`);
+                        }}
                       >
                         Update
                       </button>

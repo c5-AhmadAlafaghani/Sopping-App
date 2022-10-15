@@ -1,8 +1,13 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-export function Dashboard() {
+import { useParams } from "react-router-dom";
+
+
+export function Update() {
   const token = localStorage.getItem("token");
+  let { id } = useParams();
 
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
@@ -10,37 +15,39 @@ export function Dashboard() {
   const [price, setPrice] = useState("");
   const [message, setMessage] = useState("");
 
-  const createProduct = () => {
+  const UpdateProduct = (id) => {
     const product = {
       productName,
-      description,
+      description, 
       img,
       price,
+      
     };
     axios
-      .post(`http://localhost:5000/products/create`, product, {
+      .put(`http://localhost:5000/products/${id}`, product, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((result) => {
-        console.log(result.data);
-        setMessage("The Product has been created successfully");
+        setMessage("The Product has been updated successfully");
       })
       .catch((err) => {
         console.log(err.message);
-        setMessage("Error, The Product has not been created successfully");
+        setMessage("Error, The Product has not been updated ");
       });
   };
+  console.log(token);
   return (
     <div className="Create_Product_div">
+        <p>Update the product</p>
       {token !== null ? (
         <>
           {" "}
           <input
             className="Create_Product_inputs"
             type="text"
-            placeholder="Product Name"
+            placeholder="Update Product Name"
             onChange={(e) => {
               setProductName(e.target.value);
             }}
@@ -48,7 +55,7 @@ export function Dashboard() {
           <input
             className="Create_Product_inputs"
             type="text"
-            placeholder="Image link"
+            placeholder="Update Image link"
             onChange={(e) => {
               setImg(e.target.value);
             }}
@@ -56,7 +63,7 @@ export function Dashboard() {
           <input
             className="Create_Product_inputs"
             type="text"
-            placeholder="The description of product"
+            placeholder="Update the description of product"
             onChange={(e) => {
               setDescription(e.target.value);
             }}
@@ -64,18 +71,18 @@ export function Dashboard() {
           <input
             className="Create_Product_inputs"
             type="text"
-            placeholder="The price"
+            placeholder="Update The price"
             onChange={(e) => {
               setPrice(e.target.value);
             }}
           />
           <button
-            className="Create_button"
+            className="submit"
             onClick={() => {
-              createProduct();
+              UpdateProduct(id);
             }}
           >
-            Create
+            Submit
           </button>
           <p>{message}</p>
         </>
@@ -89,3 +96,4 @@ export function Dashboard() {
     </div>
   );
 }
+

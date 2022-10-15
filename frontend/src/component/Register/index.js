@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -12,9 +12,6 @@ export const Register = () => {
 
   return (
     <div className="register-Pg">
-      
-      
-        
       <div className="register">
         <input
           className="input"
@@ -87,6 +84,10 @@ export const Register = () => {
           Register
         </button>
         <p>{message}</p>
+        <p>
+          If you have already registered you can sign in{" "}
+          <Link to={`/login`}>here</Link>.
+        </p>
       </div>
     </div>
   );
