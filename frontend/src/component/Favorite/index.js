@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
 
 export function Favorite() {
 
   const [favorite, setFavorite] = useState([]);
   const token = localStorage.getItem("token");
 
-  let { id } = useParams();
 
 
 

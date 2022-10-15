@@ -10,7 +10,7 @@ import { Dashboard } from "./component/Dashboard";
 import { Product } from "./component/Product";
 import { Update } from "./component/Update";
 import { Route, Routes } from "react-router-dom";
-
+import "./App.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
 const [isLog, setIslog] = useState(false)
@@ -33,6 +33,7 @@ useEffect(() => {
         <Route path={"/login"} element={<Login setIslog={setIslog} />} />
         <Route path={"/register"} element={<Register />} />
         <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route path={"*"} element={<Home />} />
       </Routes>
     </div>
   );

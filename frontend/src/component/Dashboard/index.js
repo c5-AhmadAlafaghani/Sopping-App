@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import "./style.css"
 export function Dashboard() {
   const token = localStorage.getItem("token");
 
@@ -36,47 +39,39 @@ export function Dashboard() {
     <div className="Create_Product_div">
       {token !== null ? (
         <>
-          {" "}
-          <input
-            className="Create_Product_inputs"
-            type="text"
-            placeholder="Product Name"
-            onChange={(e) => {
+        <Form>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Product Name</Form.Label>
+        <Form.Control type="text" placeholder="Product Name"  onChange={(e) => {
               setProductName(e.target.value);
-            }}
-          />
-          <input
-            className="Create_Product_inputs"
-            type="text"
-            placeholder="Image link"
-            onChange={(e) => {
+            }} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Image link</Form.Label>
+        <Form.Control type="text" placeholder="Image link" onChange={(e) => {
               setImg(e.target.value);
-            }}
-          />
-          <input
-            className="Create_Product_inputs"
-            type="text"
-            placeholder="The description of product"
-            onChange={(e) => {
+            }} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>The description of product</Form.Label>
+        <Form.Control type="text" placeholder="The description of product" onChange={(e) => {
               setDescription(e.target.value);
-            }}
-          />
-          <input
-            className="Create_Product_inputs"
-            type="text"
-            placeholder="The price"
-            onChange={(e) => {
+            }} />
+      </Form.Group>
+        </Form>
+         
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>The price</Form.Label>
+        <Form.Control type="text" placeholder="The price"  onChange={(e) => {
               setPrice(e.target.value);
-            }}
-          />
-          <button
-            className="Create_button"
-            onClick={() => {
+            }} />
+      </Form.Group>
+      <Button variant="primary" type="submit"  onClick={() => {
               createProduct();
-            }}
-          >
-            Create
-          </button>
+            }}>
+        Submit
+      </Button>
+         
           <p>{message}</p>
         </>
       ) : (

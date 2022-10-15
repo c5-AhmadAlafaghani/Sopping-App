@@ -1,0 +1,10 @@
+.button_g{
+    margin: 1rem;
+}
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .3rem;
+    padding: .2rem;
+}

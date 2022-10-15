@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
+import "./style.css"
 export function Home() {
   const Navigate = useNavigate();
 
@@ -45,85 +48,96 @@ export function Home() {
         console.log(err.message);
       });
   };
-  const addToVavorite = (id)=>{
+  const addToVavorite = (id) => {
     console.log(id);
-    axios.put(`http://localhost:5000/favorite/Add/${id}`,{},{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((result) => {
-      console.log(result.data);
-      
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  }
+    axios
+      .put(
+        `http://localhost:5000/favorite/Add/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
   useEffect(() => {
     allProduct();
   }, []);
 
   return (
-    <div>
+    <div className="main">
+     
       {products.map((element) => {
         return (
-          <div key={element.id}>
-            <div className="product-big-dev">
-              <div className="Product-Img-Div">
-                <img
+          <Card style={{ width: "18rem" }} key={element.id} >
+            
+
+                <Card.Img variant="top"
                   className="img"
                   src={element.img}
                   onClick={() => {
                     Navigate(`/product/${element.id}`);
                   }}
                 />
-              </div>
-              <div className="productName-description" onClick={() => {}}>
-                <div className="productName" onClick={() => {}}>
-                  {" "}
-                  {element.productName}
-                </div>
-                <div className="description" onClick={() => {}}>
-                  {" "}
-                  {element.description}
-                </div>
-                <div className="price" onClick={() => {}}>
-                  {element.price} JD
-                </div>
+                 <Card.Body>
+          <Card.Title>{element.productName}</Card.Title>
+          <Card.Text>
+          {element.description}
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroup.Item>{element.price} JD</ListGroup.Item>
+        </ListGroup>  
                 <div>
-                  <button
-                    className="addToFavorite"
-                    onClick={() => {
-                      addToVavorite(element.id);
-                    }}
-                  >
-                    Add to favorite
-                  </button>
+                  {token ? (<>
+                    <Card.Body>
+                    <Card.Link  onClick={() => {
+                        addToVavorite(element.id);
+                      }}>Add to favorite</Card.Link>
+                    
+                  </Card.Body>
+                    
+
+                    </>) : (
+                    <></>
+                  )}
+
                   {decoded === element.user_id ? (
                     <>
-                      <button
-                        onClick={() => {
-                          deleteProductById(element.id);
-                        }}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="update"
-                        onClick={() => {
-                          Navigate(`/update/${element.id}`);
-                        }}
-                      >
-                        Update
-                      </button>
+                    <Button
+                    className="button_g"
+            variant="primary"
+            type="delete"
+            onClick={() => {
+              deleteProductById(element.id);
+            }}
+          >
+            Delete
+          </Button>
+          <Button
+          className="button_g"
+            variant="primary"
+            type="update"
+            onClick={() => {
+              Navigate(`/update/${element.id}`);
+            }}
+          >
+            Update
+          </Button>
+                     
                     </>
                   ) : (
                     <></>
                   )}
                 </div>
-              </div>
-            </div>
-          </div>
+            </Card>
         );
       })}
     </div>

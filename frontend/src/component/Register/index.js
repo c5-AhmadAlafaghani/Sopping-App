@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import "./style.css"
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -13,54 +16,44 @@ export const Register = () => {
   return (
     <div className="register-Pg">
       <div className="register">
-        <input
-          className="input"
-          type={"email"}
-          placeholder="Email"
-          onChange={(e) => {
+      <Form>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" onChange={(e) => {
             setEmail(e.target.value);
-          }}
-        />
+          }} />
+      </Form.Group>
 
-        <input
-          className="input"
-          type={"password"}
-          placeholder="Password"
-          onChange={(e) => {
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" onChange={(e) => {
             setPassword(e.target.value);
-          }}
-        />
-
-        <input
-          className="input"
-          type={"text"}
-          placeholder="User Name"
-          onChange={(e) => {
+          }} />
+      </Form.Group>
+     
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>User Name</Form.Label>
+        <Form.Control type="text" placeholder="User Name" onChange={(e) => {
             setUserName(e.target.value);
-          }}
-        />
+          }} />
+      </Form.Group>
 
-        <input
-          className="input"
-          type={"text"}
-          placeholder="Phone Number"
-          onChange={(e) => {
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Phone Number</Form.Label>
+        <Form.Control type="text" placeholder="Phone Number" onChange={(e) => {
             setPhoneNumber(e.target.value);
-          }}
-        />
+          }}/>
+      </Form.Group>
 
-        <input
-          className="input"
-          type={"text"}
-          placeholder="Address"
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Address</Form.Label>
+        <Form.Control type="text" placeholder="Address"
           onChange={(e) => {
             setAddress(e.target.value);
-          }}
-        />
-
-        <button
-          className="button"
-          onClick={() => {
+          }} />
+      </Form.Group>
+      </Form>
+      <Button variant="primary" type="submit" onClick={() => {
             axios
               .post("http://localhost:5000/register", {
                 email,
@@ -79,10 +72,15 @@ export const Register = () => {
                 console.log(err.message);
                 return setMessage("try again");
               });
-          }}
-        >
-          Register
-        </button>
+          }}>
+        Submit
+      </Button>
+  
+
+
+       
+
+       
         <p>{message}</p>
         <p>
           If you have already registered you can sign in{" "}
